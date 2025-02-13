@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "UtilityPoles",
+	"Description": "",
+	"Category": "Other",
+	"CreatedBy": "Sora Mas",
+	"CreatedByURL": "bumvolla.github.com",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "UtilityPoles",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
