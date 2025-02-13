@@ -77,7 +77,7 @@ int USplineHelpers::GetMeshCountBewteenSplinePoints(const USplineComponent* Spli
 	return FMath::TruncToInt(USplineHelpers::GetDistanceBetweenSplinePoints(Spline, Point1, Point2) / USplineHelpers::GetMeshLenght(Mesh, Axis));
 }
 
-TArray<FVector> UCatenaryHelpers::CreateCatenaryNewton(const FVector& StartPoint, const FVector& EndPoint, float Slack, int32 Steps)
+TArray<FVector> UCatenaryHelpers::CreateCatenaryNewton(const FVector& StartPoint, const FVector& EndPoint, const float Slack, const float SlackVariation, int32 Steps)
 {
 
 	TArray<FVector> Points;
@@ -92,7 +92,8 @@ TArray<FVector> UCatenaryHelpers::CreateCatenaryNewton(const FVector& StartPoint
 		FVector(EndPoint.X, EndPoint.Y, StartPoint.Z),
 		StartPoint
 	);
-	float WireLength = TotalDistance + FMath::Max(0.0001f, Slack);
+	float ran = FMath::FRandRange(SlackVariation * -1, SlackVariation);
+	float WireLength = TotalDistance + FMath::Max(50.f, Slack+ran);
 	float HeightDiff = EndPoint.Z - StartPoint.Z;
 
 	float TargetRatio = FMath::Sqrt(
