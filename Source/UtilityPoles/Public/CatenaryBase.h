@@ -35,6 +35,9 @@ protected:
 	float Slack = 100;
 
 	UPROPERTY(EditInstanceOnly, Category = "Catenary")
+	float SlackVariation = 2;
+
+	UPROPERTY(EditInstanceOnly, Category = "Catenary")
 	uint16 SplineResolution = 10;
 
 	UPROPERTY(EditInstanceOnly, Category = "Mesh")

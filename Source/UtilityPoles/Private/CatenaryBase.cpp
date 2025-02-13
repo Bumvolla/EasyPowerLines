@@ -119,6 +119,7 @@ TArray<FVector> ACatenaryBase::CalculateSingleCatenary(TArray<FVector> Conection
             currentPos,
             nextPos,
             Slack,
+            SlackVariation,
             SplineResolution);
 
         if (!bIsLast)
@@ -186,6 +187,7 @@ TArray<TArray<FVector>> ACatenaryBase::CalculateCatenariesParalel(const TArray<A
                 currentPos.TransformPosition(localSpaceWireTargets[i]),
                 nextPos.TransformPosition(localSpaceWireTargets[i]),
                 Slack,
+                SlackVariation,
                 SplineResolution);
 
             if (CatenaryPoints.IsEmpty()) return;

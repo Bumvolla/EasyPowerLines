@@ -58,7 +58,7 @@ public:
 
 	// Newton's Method - Most accurate
 	UFUNCTION(BlueprintCallable, Category = "Catenary")
-	static TArray<FVector> CreateCatenaryNewton(const FVector& StartPoint, const FVector& EndPoint, float Slack, int32 Steps);
+	static TArray<FVector> CreateCatenaryNewton(const FVector& StartPoint, const FVector& EndPoint, const float Slack, const float SlackVariation, int32 Steps);
 
 	// Fixed-point iteration - Balance of speed and accuracy
 	UFUNCTION(BlueprintCallable, Category = "Catenary")

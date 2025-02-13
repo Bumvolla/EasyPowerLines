@@ -48,6 +48,9 @@ public:
 	float DistanceBetweenObjects = 1000;
 
 	UPROPERTY(EditInstanceOnly, Category = "Generation")
+	float RandomTilt = 0;
+
+	UPROPERTY(EditInstanceOnly, Category = "Generation")
 	TSubclassOf<AUtilityPolePreset> PresetClass;
 
 	UPROPERTY(EditInstanceOnly, Category = "Generation")
