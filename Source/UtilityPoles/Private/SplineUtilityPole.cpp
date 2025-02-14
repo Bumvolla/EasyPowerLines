@@ -81,6 +81,7 @@ void ASplineUtilityPole::GeneratePoles()
 
 void ASplineUtilityPole::RemoveExcesPoles(int32 NeededPoleCount)
 {
+
     if (NeededPoleCount < PoleIndices.Num())
     {
         TArray<UActorComponent*> ComponentsToDestroy;
@@ -115,6 +116,9 @@ void ASplineUtilityPole::ReuseOrCreatePoles(TArray<FTransform> AllPoleTransforms
 
         if (ExistingPole)
         {
+            if (ExistingPole->StaticClass() != PresetClass)
+                ExistingPole->SetChildActorClass(PresetClass);
+
             ExistingPole->SetRelativeTransform(Transform);
         }
         else
