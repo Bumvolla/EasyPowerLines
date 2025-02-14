@@ -8,7 +8,7 @@ ASplineUtilityPole::ASplineUtilityPole()
 {
     
 	Spline = CreateDefaultSubobject<USplineComponent>(TEXT("Spline"));
-
+    Spline->SetMobility(EComponentMobility::Static);
 	SetRootComponent(Spline);
 
     bRunConstructionScriptOnDrag = false;

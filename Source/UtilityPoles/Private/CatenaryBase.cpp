@@ -72,9 +72,11 @@ void ACatenaryBase::ReuseOrCreateSplines()
         if (!AllWires[i])
         {
             Wire = NewObject<USplineComponent>(this);
-            Wire->RegisterComponent();
+            Wire->RegisterComponent();            
+            Wire->SetMobility(EComponentMobility::Static);
             AllWires[i]=Wire;
         }
+
     }
 
 }
