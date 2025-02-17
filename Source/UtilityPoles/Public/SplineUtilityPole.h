@@ -58,8 +58,6 @@ public:
 	UPROPERTY(EditInstanceOnly, Category = "Generation")
 	bool bIsClosedLoop = false;
 
-	UPROPERTY(EditInstanceOnly, Category = "Debug")
-	bool bShowSplines = false;
 	UPROPERTY(EditInstanceOnly, Category = "Snaping")
 	bool bSnapToTerrain = false;
 
