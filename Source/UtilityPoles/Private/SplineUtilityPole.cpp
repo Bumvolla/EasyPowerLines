@@ -79,6 +79,41 @@ void ASplineUtilityPole::GeneratePoles()
 
 }
 
+void ASplineUtilityPole::SnapToTerrain(const FTransform& OgTransform, FTransform& SnapedTransform)
+{
+    const FVector OgTransformLocation = OgTransform.GetLocation();
+    const FVector RayStartLocation = FVector(OgTransformLocation.X, OgTransformLocation.Y, OgTransformLocation.Z + RayLength/2);
+    const FVector RayEndLocation = FVector(OgTransformLocation.X, OgTransformLocation.Y, OgTransformLocation.Z - RayLength/2);
+
+    FHitResult HitResult;
+
+    FCollisionQueryParams CollisionParams;
+    CollisionParams.AddIgnoredActor(this);
+
+    bool bHit = GetWorld()->LineTraceSingleByChannel(
+        HitResult,
+        RayStartLocation,
+        RayEndLocation,
+        CollisionChannel,
+        CollisionParams
+    );
+
+    if (bDrawDebugLines)
+    {
+        DrawDebugLines(RayStartLocation, RayEndLocation, bHit, HitResult);
+    }
+
+    if (bHit)
+    {
+        const FQuat ImpactNormalRotator = FRotationMatrix::MakeFromZ(HitResult.ImpactNormal).ToQuat();
+        SnapedTransform = FTransform(bAlignToNormal ? ImpactNormalRotator : OgTransform.GetRotation(), HitResult.ImpactPoint, OgTransform.GetScale3D());
+    }
+    else
+    {
+        SnapedTransform = OgTransform;
+    }
+}
+
 void ASplineUtilityPole::RemoveExcesPoles(int32 NeededPoleCount)
 {
 
@@ -108,6 +143,11 @@ void ASplineUtilityPole::ReuseOrCreatePoles(TArray<FTransform> AllPoleTransforms
 
     for (FTransform& Transform : AllPoleTransforms)
     {
+
+        if (bSnapToTerrain)
+        {
+            SnapToTerrain(Transform, Transform);
+        }
 
         if (RandomTilt != 0)
         {
@@ -142,6 +182,34 @@ void ASplineUtilityPole::ReuseOrCreatePoles(TArray<FTransform> AllPoleTransforms
 
         i++;
 
+    }
+}
+
+void ASplineUtilityPole::DrawDebugLines(FVector StartPoint, FVector EndPoint, bool bHit, FHitResult Hit)
+{
+    DrawDebugLine(
+        GetWorld(),
+        GetActorTransform().TransformPosition(StartPoint),
+        GetActorTransform().TransformPosition(EndPoint),
+        FColor::Red,
+        false,
+        10.f,
+        0,
+        5.f
+    );
+    if (bHit)
+    {
+
+        const FVector TransformedHitPosition = GetActorTransform().TransformPosition(Hit.ImpactPoint);
+
+        DrawDebugLine(
+            GetWorld(),
+            TransformedHitPosition,
+            TransformedHitPosition,
+            FColor::Green, false,
+            10.f,
+            0,
+            20.f);
     }
 }
 

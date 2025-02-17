@@ -27,6 +27,8 @@ protected:
 
 	void GeneratePoles();
 
+	void SnapToTerrain(const FTransform& OgTransform, FTransform& SnapedTransform);
+
 	void RemoveExcesPoles(int32 NeededPoleCount);
 
 	void ReuseOrCreatePoles(TArray<FTransform> AllPoleTransforms);
@@ -37,7 +39,7 @@ private:
 
 	TArray<UChildActorComponent*> PoleIndices;
 
-	
+	void DrawDebugLines(FVector StartPoint, FVector EndPoint, bool bHit, FHitResult Hit);
 
 public:	
 
@@ -58,5 +60,19 @@ public:
 
 	UPROPERTY(EditInstanceOnly, Category = "Debug")
 	bool bShowSplines = false;
+	UPROPERTY(EditInstanceOnly, Category = "Snaping")
+	bool bSnapToTerrain = false;
+
+	UPROPERTY(EditInstanceOnly, Category = "Snaping")
+	float RayLength = 200;
+
+	UPROPERTY(EditInstanceOnly, Category = "Snaping")
+	bool bAlignToNormal = false;
+
+	UPROPERTY(EditInstanceOnly, Category = "Snaping")
+	TEnumAsByte<ECollisionChannel> CollisionChannel = ECollisionChannel::ECC_Visibility;
+
+	UPROPERTY(EditInstanceOnly, Category = "Snaping")
+	bool bDrawDebugLines = false;
 
 };
