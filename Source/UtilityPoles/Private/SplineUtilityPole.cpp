@@ -108,9 +108,13 @@ void ASplineUtilityPole::ReuseOrCreatePoles(TArray<FTransform> AllPoleTransforms
 
     for (FTransform& Transform : AllPoleTransforms)
     {
-        FRotator storedRotator = Transform.Rotator();
-        FRotator randomizedRotator = FRotator(FMath::RandRange(RandomTilt * -1, RandomTilt), storedRotator.Yaw, storedRotator.Roll);
-        Transform = FTransform(RandomTilt != 0 ? randomizedRotator : storedRotator , Transform.GetLocation(), Transform.GetScale3D());
+
+        if (RandomTilt != 0)
+        {
+            FRotator storedRotator = Transform.Rotator();
+            FRotator randomizedRotator = FRotator(FMath::RandRange(RandomTilt * -1, RandomTilt), storedRotator.Yaw, storedRotator.Roll);
+            Transform.SetRotation(randomizedRotator.Quaternion());
+        }
 
         UChildActorComponent* ExistingPole = i < PoleIndices.Num() ? PoleIndices[i] : nullptr;
 
