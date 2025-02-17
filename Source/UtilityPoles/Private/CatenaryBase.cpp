@@ -262,7 +262,13 @@ void ACatenaryBase::ConstructSplineMeshesAlongSplines(USplineComponent* Spline)
             {
                 USplineHelpers::GetSplineMeshStartAndEndByIteration(
                     i,
-                    MeshLength, Spline, StartPoint, StartTangent, EndPoint, EndTangent, SegmentStartDistance);
+                    MeshLength,
+                    Spline,
+                    StartPoint,
+                    StartTangent,
+                    EndPoint,
+                    EndTangent,
+                    SegmentStartDistance);
             }
 
             SplineMesh->SetStartAndEnd(StartPoint, StartTangent, EndPoint, EndTangent);
