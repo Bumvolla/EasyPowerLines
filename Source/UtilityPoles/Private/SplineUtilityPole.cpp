@@ -6,7 +6,8 @@
 // Sets default values
 ASplineUtilityPole::ASplineUtilityPole()
 {
-    
+    DisableComponentsSimulatePhysics();
+    PrimaryActorTick.bCanEverTick = false;
 	Spline = CreateDefaultSubobject<USplineComponent>(TEXT("Spline"));
     Spline->SetMobility(EComponentMobility::Static);
 	SetRootComponent(Spline);
