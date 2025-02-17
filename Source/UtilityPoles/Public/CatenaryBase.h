@@ -68,4 +68,18 @@ protected:
 
 	void ConstructSplineMeshesAlongSplines(USplineComponent* Spline);
 
+	const TMap<EAxis::Type, ESplineMeshAxis::Type> EnumFinder =
+	{
+		{EAxis::None,ESplineMeshAxis::X},
+		{EAxis::X,ESplineMeshAxis::X},
+		{EAxis::Y,ESplineMeshAxis::Y},
+		{EAxis::Z,ESplineMeshAxis::Z}
+	};
+
+	ESplineMeshAxis::Type FindAxis(EAxis::Type Axis)
+	{
+		const ESplineMeshAxis::Type* FoundAxis = EnumFinder.Find(Axis);
+		return *FoundAxis;
+	}
+
 };

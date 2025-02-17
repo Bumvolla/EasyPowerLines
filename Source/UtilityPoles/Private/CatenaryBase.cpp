@@ -238,7 +238,7 @@ void ACatenaryBase::ConstructSplineMeshesAlongSplines(USplineComponent* Spline)
                 SplineMesh = NewObject<USplineMeshComponent>(this);
                 SplineMesh->RegisterComponent();
                 SplineMesh->AttachToComponent(Spline, FAttachmentTransformRules::KeepRelativeTransform);
-                SplineMesh->SetForwardAxis(ESplineMeshAxis::X);
+                SplineMesh->SetForwardAxis(FindAxis(WireMeshAxis));
                 SplineMesh->SetStaticMesh(WireMesh);
             }
 
