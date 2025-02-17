@@ -92,8 +92,8 @@ TArray<FVector> UCatenaryHelpers::CreateCatenaryNewton(const FVector& StartPoint
 		FVector(EndPoint.X, EndPoint.Y, StartPoint.Z),
 		StartPoint
 	);
-	float ran = FMath::FRandRange(SlackVariation * -1, SlackVariation);
-	float WireLength = TotalDistance + FMath::Max(50.f, Slack+ran);
+	float ran = FMath::FRandRange(0, SlackVariation);
+	float WireLength = TotalDistance + FMath::Max(MIN_SLACK, Slack+ran);
 	float HeightDiff = EndPoint.Z - StartPoint.Z;
 
 	float TargetRatio = FMath::Sqrt(
@@ -135,7 +135,7 @@ TArray<FVector> UCatenaryHelpers::CreateCatenaryFixed(const FVector& StartPoint,
 		FVector(EndPoint.X, EndPoint.Y, StartPoint.Z),
 		StartPoint
 	);
-	float WireLength = TotalDistance + FMath::Max(0.0001f, Slack);
+	float WireLength = TotalDistance + FMath::Max(MIN_SLACK, Slack);
 	float HeightDiff = EndPoint.Z - StartPoint.Z;
 
 	float TargetRatio = FMath::Sqrt(

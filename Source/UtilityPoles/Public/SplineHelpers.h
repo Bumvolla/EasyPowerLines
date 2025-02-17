@@ -19,6 +19,8 @@
 
 #include "SplineHelpers.generated.h"
 
+#define MIN_SLACK (50.f)
+
 /**
  * 
  */
