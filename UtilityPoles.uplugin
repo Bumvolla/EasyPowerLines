@@ -3,7 +3,7 @@
 	"Version": 1,
 	"VersionName": "1.0",
 	"FriendlyName": "UtilityPoles",
-	"Description": "",
+	"Description": "Tools to procedurally generate power lines",
 	"Category": "Other",
 	"CreatedBy": "Sora Mas",
 	"CreatedByURL": "bumvolla.github.com",
