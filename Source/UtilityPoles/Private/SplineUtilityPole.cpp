@@ -46,9 +46,6 @@ void ASplineUtilityPole::GenerateWires()
     // Create or reuse spline components
     ReuseOrCreateSplines();
 
-    //Handles destruction of all previously generated spline meshes
-    RemoveSplineMeshes();
-
     //Creates and return an array that contains all catenary points for each needed wire
     TArray<TArray<FVector>> AllCatenaryPoints = CalculateCatenariesParalel(CastedKeys, Spline->IsClosedLoop());
     if (AllCatenaryPoints.IsEmpty()) return;
@@ -59,10 +56,20 @@ void ASplineUtilityPole::GenerateWires()
         AllWires[i]->SetSplinePoints(AllCatenaryPoints[i], ESplineCoordinateSpace::Local);
     }
 
+    //Move current spline meshes to the reuse array
+    AvailableSplineMeshes = AllSplineMeshes;
+    AllSplineMeshes.Reset();
+
     // Constructs spline meshes along each spline
     for (int32 i = 0; i < AllWires.Num();i++)
     {
         ConstructSplineMeshesAlongSplines(AllWires[i]);
+    }
+
+    // Remove exces spline meshes
+    for (USplineMeshComponent* ExtraSplineMesh : AvailableSplineMeshes)
+    {
+        ExtraSplineMesh->DestroyComponent();
     }
 
 }

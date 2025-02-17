@@ -26,6 +26,7 @@ protected:
 
 	TArray<USplineComponent*> AllWires;
 	TArray<USplineMeshComponent*> AllSplineMeshes;
+	TArray<USplineMeshComponent*> AvailableSplineMeshes;
 
 	virtual void OnConstruction(const FTransform& Transform) override;
 

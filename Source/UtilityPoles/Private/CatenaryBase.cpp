@@ -219,21 +219,28 @@ void ACatenaryBase::ConstructSplineMeshesAlongSplines(USplineComponent* Spline)
 
     while (SegmentEndPoint < Spline->GetNumberOfSplinePoints())
     {
-
         int32 MeshCount = USplineHelpers::GetMeshCountBewteenSplinePoints(Spline, WireMesh, WireMeshAxis, SegmentStartPoint, SegmentEndPoint);
 
         float SegmentStartDistance = Spline->GetDistanceAlongSplineAtSplinePoint(SegmentStartPoint);
 
         for (int32 i = 0; i < MeshCount; i++)
         {
-            USplineMeshComponent* SplineMesh = NewObject<USplineMeshComponent>(this);
-            if (!SplineMesh)
-            {
-                continue;
-            }
 
-            SplineMesh->RegisterComponent();
-            SplineMesh->AttachToComponent(Spline, FAttachmentTransformRules::KeepRelativeTransform);
+            USplineMeshComponent* SplineMesh;
+
+            if (AvailableSplineMeshes.Num() > 0)
+            {
+                SplineMesh = AvailableSplineMeshes.Pop();
+                if (SplineMesh->GetStaticMesh() != WireMesh) SplineMesh->SetStaticMesh(WireMesh);
+            }
+            else
+            {
+                SplineMesh = NewObject<USplineMeshComponent>(this);
+                SplineMesh->RegisterComponent();
+                SplineMesh->AttachToComponent(Spline, FAttachmentTransformRules::KeepRelativeTransform);
+                SplineMesh->SetForwardAxis(ESplineMeshAxis::X);
+                SplineMesh->SetStaticMesh(WireMesh);
+            }
 
             FVector StartPoint, StartTangent, EndPoint, EndTangent;
 
@@ -272,8 +279,8 @@ void ACatenaryBase::ConstructSplineMeshesAlongSplines(USplineComponent* Spline)
             }
 
             SplineMesh->SetStartAndEnd(StartPoint, StartTangent, EndPoint, EndTangent);
-            SplineMesh->SetStaticMesh(WireMesh);
-            SplineMesh->SetForwardAxis(ESplineMeshAxis::X);
+
+
             AllSplineMeshes.Add(SplineMesh);
         }
 
@@ -281,6 +288,7 @@ void ACatenaryBase::ConstructSplineMeshesAlongSplines(USplineComponent* Spline)
         SegmentStartPoint = SegmentEndPoint;
         SegmentEndPoint += SplineResolution - 1;
     }
+
 }
 
 
