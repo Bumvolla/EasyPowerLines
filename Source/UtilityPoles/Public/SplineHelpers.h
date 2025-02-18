@@ -71,19 +71,3 @@ private:
 	static float FindParameterFixed(float TargetRatio);
 
 };
-
-#if WITH_EDITOR
-
-UCLASS()
-class UTILITYPOLES_API UEditorHelpers : public UBlueprintFunctionLibrary
-{
-	GENERATED_BODY()
-
-public:
-
-
-	static TArray<AActor*> GetObjectsInRadius(const FVector& Center, float Radius);
-
-};
-
-#endif
