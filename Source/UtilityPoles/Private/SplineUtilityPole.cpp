@@ -89,9 +89,9 @@ void ASplineUtilityPole::GeneratePoles()
 
 void ASplineUtilityPole::SnapToTerrain(const FTransform& OgTransform, FTransform& SnapedTransform)
 {
-    const FVector OgTransformLocation = OgTransform.GetLocation();
-    const FVector RayStartLocation = FVector(OgTransformLocation.X, OgTransformLocation.Y, OgTransformLocation.Z + RayLength/2);
-    const FVector RayEndLocation = FVector(OgTransformLocation.X, OgTransformLocation.Y, OgTransformLocation.Z - RayLength/2);
+    const FVector WorldLocation = GetActorTransform().TransformPosition(OgTransform.GetLocation());
+    const FVector RayStartLocation = FVector(WorldLocation.X, WorldLocation.Y, WorldLocation.Z + RayLength / 2);
+    const FVector RayEndLocation = FVector(WorldLocation.X, WorldLocation.Y, WorldLocation.Z - RayLength / 2);
 
     FHitResult HitResult;
 
@@ -113,8 +113,8 @@ void ASplineUtilityPole::SnapToTerrain(const FTransform& OgTransform, FTransform
 
     if (bHit)
     {
-        const FQuat ImpactNormalRotator = FRotationMatrix::MakeFromZ(HitResult.ImpactNormal).ToQuat();
-        SnapedTransform = FTransform(bAlignToNormal ? ImpactNormalRotator : OgTransform.GetRotation(), HitResult.ImpactPoint, OgTransform.GetScale3D());
+        const FQuat ImpactNormalRotator = FQuat::FindBetweenNormals(FVector::UpVector, GetActorTransform().InverseTransformVectorNoScale(HitResult.ImpactNormal));
+        SnapedTransform = FTransform(bAlignToNormal ? ImpactNormalRotator : OgTransform.GetRotation(), GetActorTransform().InverseTransformPosition(HitResult.ImpactPoint), OgTransform.GetScale3D());
     }
     else
     {
@@ -197,8 +197,8 @@ void ASplineUtilityPole::DrawDebugLines(FVector StartPoint, FVector EndPoint, bo
 {
     DrawDebugLine(
         GetWorld(),
-        GetActorTransform().TransformPosition(StartPoint),
-        GetActorTransform().TransformPosition(EndPoint),
+        StartPoint,
+        EndPoint,
         FColor::Red,
         false,
         10.f,
@@ -208,16 +208,23 @@ void ASplineUtilityPole::DrawDebugLines(FVector StartPoint, FVector EndPoint, bo
     if (bHit)
     {
 
-        const FVector TransformedHitPosition = GetActorTransform().TransformPosition(Hit.ImpactPoint);
-
         DrawDebugLine(
             GetWorld(),
-            TransformedHitPosition,
-            TransformedHitPosition,
+            Hit.Location,
+            Hit.Location,
             FColor::Green, false,
             10.f,
             0,
             20.f);
+
+        DrawDebugLine(
+            GetWorld(),
+            Hit.Location,
+            Hit.Location + Hit.ImpactNormal * 50.f,
+            FColor::Blue, false,
+            10.f,
+            0,
+            5.f);
     }
 }
 
