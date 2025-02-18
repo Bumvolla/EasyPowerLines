@@ -2,7 +2,7 @@
 
 <br/>
 <p align="center">
-  <a href="https://github.com/gtreshchev/RuntimeSpeechRecognizer">
+  <a href="https://github.com/Bumvolla/UE_EasyPowerLines">
     <img src="Resources/Icon128.png" alt="Logo" width="80" height="80">
   </a>
 <h3 align="center">Easy power lines</h3>
