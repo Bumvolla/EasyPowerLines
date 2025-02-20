@@ -87,41 +87,6 @@ void ASplineUtilityPole::GeneratePoles()
 
 }
 
-void ASplineUtilityPole::SnapToTerrain(const FTransform& OgTransform, FTransform& SnapedTransform)
-{
-    const FVector WorldLocation = GetActorTransform().TransformPosition(OgTransform.GetLocation());
-    const FVector RayStartLocation = FVector(WorldLocation.X, WorldLocation.Y, WorldLocation.Z + RayLength / 2);
-    const FVector RayEndLocation = FVector(WorldLocation.X, WorldLocation.Y, WorldLocation.Z - RayLength / 2);
-
-    FHitResult HitResult;
-
-    FCollisionQueryParams CollisionParams;
-    CollisionParams.AddIgnoredActor(this);
-
-    bool bHit = GetWorld()->LineTraceSingleByChannel(
-        HitResult,
-        RayStartLocation,
-        RayEndLocation,
-        CollisionChannel,
-        CollisionParams
-    );
-
-    if (bDrawDebugLines)
-    {
-        DrawDebugLines(RayStartLocation, RayEndLocation, bHit, HitResult);
-    }
-
-    if (bHit)
-    {
-        const FQuat ImpactNormalRotator = FQuat::FindBetweenNormals(FVector::UpVector, GetActorTransform().InverseTransformVectorNoScale(HitResult.ImpactNormal));
-        SnapedTransform = FTransform(bAlignToNormal ? ImpactNormalRotator : OgTransform.GetRotation(), GetActorTransform().InverseTransformPosition(HitResult.ImpactPoint), OgTransform.GetScale3D());
-    }
-    else
-    {
-        SnapedTransform = OgTransform;
-    }
-}
-
 void ASplineUtilityPole::RemoveExcesPoles(int32 NeededPoleCount)
 {
 
@@ -159,9 +124,7 @@ void ASplineUtilityPole::ReuseOrCreatePoles(TArray<FTransform> AllPoleTransforms
 
         if (RandomTilt != 0)
         {
-            FRotator storedRotator = Transform.Rotator();
-            FRotator randomizedRotator = FRotator(FMath::RandRange(RandomTilt * -1, RandomTilt), storedRotator.Yaw, storedRotator.Roll);
-            Transform.SetRotation(randomizedRotator.Quaternion());
+            RandomizeTilt(Transform, Transform);
         }
 
         UChildActorComponent* ExistingPole = i < PoleIndices.Num() ? PoleIndices[i] : nullptr;
@@ -171,6 +134,7 @@ void ASplineUtilityPole::ReuseOrCreatePoles(TArray<FTransform> AllPoleTransforms
             if (ExistingPole->StaticClass() != PresetClass)
                 ExistingPole->SetChildActorClass(PresetClass);
 
+            ExistingPole->PrimaryComponentTick.bCanEverTick = false;
             ExistingPole->SetRelativeTransform(Transform);
         }
         else
@@ -181,6 +145,7 @@ void ASplineUtilityPole::ReuseOrCreatePoles(TArray<FTransform> AllPoleTransforms
             NewPole->RegisterComponent();
             NewPole->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
             NewPole->SetRelativeTransform(Transform);
+            NewPole->PrimaryComponentTick.bCanEverTick = false;
 
             if (PoleIndices.IsValidIndex(i))
                 PoleIndices[i] = NewPole;
@@ -193,41 +158,6 @@ void ASplineUtilityPole::ReuseOrCreatePoles(TArray<FTransform> AllPoleTransforms
     }
 }
 
-void ASplineUtilityPole::DrawDebugLines(FVector StartPoint, FVector EndPoint, bool bHit, FHitResult Hit)
-{
-    DrawDebugLine(
-        GetWorld(),
-        StartPoint,
-        EndPoint,
-        FColor::Red,
-        false,
-        10.f,
-        0,
-        5.f
-    );
-    if (bHit)
-    {
-
-        DrawDebugLine(
-            GetWorld(),
-            Hit.Location,
-            Hit.Location,
-            FColor::Green, false,
-            10.f,
-            0,
-            20.f);
-
-        DrawDebugLine(
-            GetWorld(),
-            Hit.Location,
-            Hit.Location + Hit.ImpactNormal * 50.f,
-            FColor::Blue, false,
-            10.f,
-            0,
-            5.f);
-    }
-}
-
 void ASplineUtilityPole::Generate()
 {
 
@@ -235,4 +165,6 @@ void ASplineUtilityPole::Generate()
 
     GeneratePoles();
     GenerateWires();
+
+    if (bCleanupSplines) CleanupSplines();
 }

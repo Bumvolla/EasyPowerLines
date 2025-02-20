@@ -29,8 +29,9 @@ protected:
 	TArray<USplineMeshComponent*> AvailableSplineMeshes;
 
 	virtual void OnConstruction(const FTransform& Transform) override;
-
 	virtual void Generate();
+
+public:
 
 	UPROPERTY(EditInstanceOnly, Category = "Catenary")
 	float Slack = 100;
@@ -50,6 +51,29 @@ protected:
 	UPROPERTY(EditInstanceOnly, Category = "Generation")
 	bool autoGenerate = false;
 
+	UPROPERTY(EditInstanceOnly, Category = "Generation")
+	float RandomTilt = 0;
+
+	UPROPERTY(EditInstanceOnly, Category = "Snaping")
+	bool bSnapToTerrain = false;
+
+	UPROPERTY(EditInstanceOnly, Category = "Snaping")
+	float RayLength = 200;
+
+	UPROPERTY(EditInstanceOnly, Category = "Snaping")
+	bool bAlignToNormal = false;
+
+	UPROPERTY(EditInstanceOnly, Category = "Snaping")
+	TEnumAsByte<ECollisionChannel> CollisionChannel = ECollisionChannel::ECC_Visibility;
+
+	UPROPERTY(EditInstanceOnly, Category = "Snaping")
+	bool bDrawDebugLines = false;
+
+	UPROPERTY(EditInstanceOnly, Category = "Debug")
+	bool bCleanupSplines = false;
+
+protected:
+
 	float MeshLenght;
 
 	void SetMeshLenght();
@@ -67,6 +91,16 @@ protected:
 	TArray<TArray<FVector>> CalculateCatenariesParalel(const TArray<AUtilityPolePreset*>& ConectionPoints, bool bIsClosedLoop = false);
 
 	void ConstructSplineMeshesAlongSplines(USplineComponent* Spline);
+
+	void SnapToTerrain(const FTransform& OgTransform, FTransform& SnapedTransform, ECoordSystem CoordSystem = ECoordSystem::COORD_Local);
+
+	void AlignToNormal(const FVector& ImpactNormal, FQuat& NormalAlignedQuat);
+
+	void RandomizeTilt(const FTransform& OgTransform, FTransform& RandomRotatedTransform);
+
+	void DrawDebugLines(FVector StartPoint, FVector EndPoint, bool bHit, FHitResult Hit);
+
+	void CleanupSplines();
 
 	const TMap<EAxis::Type, ESplineMeshAxis::Type> EnumFinder =
 	{
