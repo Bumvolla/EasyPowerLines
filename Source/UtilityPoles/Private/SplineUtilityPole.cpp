@@ -20,7 +20,11 @@ void ASplineUtilityPole::GenerateWires()
 {
 
     // Mesh check
-    if (!WireMesh) return;
+    if (!WireMesh)
+    {
+        RemoveSplineMeshes();
+        return;
+    }
     SetMeshLenght();
 
     // Poles setup
