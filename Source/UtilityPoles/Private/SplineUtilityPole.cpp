@@ -81,7 +81,10 @@ void ASplineUtilityPole::GenerateWires()
 void ASplineUtilityPole::GeneratePoles()
 {
     // Generate transforms
-    const TArray<FTransform> Transforms = USplineHelpers::GetTransformPointsAlongSpline(Spline, DistanceBetweenObjects);
+    TArray<FTransform> Transforms = USplineHelpers::GetTransformPointsAlongSpline(Spline, DistanceBetweenObjects);
+
+    if (bIsClosedLoop)
+        Transforms.Pop();
 
     // Remove exces poles
     RemoveExcesPoles(Transforms.Num());
