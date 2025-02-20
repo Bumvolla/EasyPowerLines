@@ -27,8 +27,6 @@ protected:
 
 	void GeneratePoles();
 
-	void SnapToTerrain(const FTransform& OgTransform, FTransform& SnapedTransform);
-
 	void RemoveExcesPoles(int32 NeededPoleCount);
 
 	void ReuseOrCreatePoles(TArray<FTransform> AllPoleTransforms);
@@ -39,8 +37,6 @@ private:
 
 	TArray<UChildActorComponent*> PoleIndices;
 
-	void DrawDebugLines(FVector StartPoint, FVector EndPoint, bool bHit, FHitResult Hit);
-
 public:	
 
 	UFUNCTION(CallInEditor, Category = "Generation")
@@ -50,27 +46,9 @@ public:
 	float DistanceBetweenObjects = 1000;
 
 	UPROPERTY(EditInstanceOnly, Category = "Generation")
-	float RandomTilt = 0;
-
-	UPROPERTY(EditInstanceOnly, Category = "Generation")
 	TSubclassOf<AUtilityPolePreset> PresetClass;
 
 	UPROPERTY(EditInstanceOnly, Category = "Generation")
 	bool bIsClosedLoop = false;
-
-	UPROPERTY(EditInstanceOnly, Category = "Snaping")
-	bool bSnapToTerrain = false;
-
-	UPROPERTY(EditInstanceOnly, Category = "Snaping")
-	float RayLength = 200;
-
-	UPROPERTY(EditInstanceOnly, Category = "Snaping")
-	bool bAlignToNormal = false;
-
-	UPROPERTY(EditInstanceOnly, Category = "Snaping")
-	TEnumAsByte<ECollisionChannel> CollisionChannel = ECollisionChannel::ECC_Visibility;
-
-	UPROPERTY(EditInstanceOnly, Category = "Snaping")
-	bool bDrawDebugLines = false;
 
 };
