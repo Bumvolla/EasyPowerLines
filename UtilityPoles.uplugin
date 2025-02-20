@@ -1,15 +1,15 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.0",
+	"VersionName": "1.1",
 	"FriendlyName": "EasyPowerLines",
 	"Description": "Tools to procedurally generate power lines",
 	"Category": "Other",
 	"CreatedBy": "Sora Mas",
 	"CreatedByURL": "bumvolla.github.com",
-	"DocsURL": "",
+	"DocsURL": "https://bumvolla.github.io/2025/02/20/EasyPowerLinesDocs/",
 	"MarketplaceURL": "",
-	"SupportURL": "",
+	"SupportURL": "https://bumvolla.github.io/contact/",
 	"CanContainContent": true,
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
@@ -18,7 +18,12 @@
 		{
 			"Name": "UtilityPoles",
 			"Type": "Editor",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64",
+				"Linux",
+				"Mac"
+			]
 		}
 	]
 }
