@@ -11,7 +11,7 @@
      Unreal plugin that integrates tools to procedurally generate power lines
     <br/>
     <br/>
-    <a href=""><strong>Docs</strong></a>
+    <a href="https://bumvolla.github.io/2025/02/20/EasyPowerLinesDocs/"><strong>Docs</strong></a>
   </p>
 
 ## Features
