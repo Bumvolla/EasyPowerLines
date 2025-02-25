@@ -232,6 +232,7 @@ void ACatenaryBase::ConstructSplineMeshesAlongSplines(USplineComponent* Spline)
             {
                 SplineMesh = AvailableSplineMeshes.Pop();
                 if (SplineMesh->GetStaticMesh() != WireMesh) SplineMesh->SetStaticMesh(WireMesh);
+                SplineMesh->SetForwardAxis(FindAxis(WireMeshAxis));
             }
             else
             {
