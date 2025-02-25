@@ -12,7 +12,7 @@
 /**
  * 
  */
-UCLASS(NotPlaceable)
+UCLASS(Abstract)
 class UTILITYPOLES_API APoleBasedCatenary : public ACatenaryBase
 {
 	GENERATED_BODY()

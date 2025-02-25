@@ -12,7 +12,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Placeable)
 class UTILITYPOLES_API APointToPointCatenary : public ACatenaryBase
 {
 	GENERATED_BODY()

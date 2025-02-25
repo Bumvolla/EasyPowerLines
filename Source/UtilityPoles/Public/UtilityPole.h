@@ -12,7 +12,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Placeable)
 class UTILITYPOLES_API AUtilityPole : public APoleBasedCatenary
 {
 	GENERATED_BODY()
@@ -26,8 +26,8 @@ public:
 	UPROPERTY(EditInstanceOnly, Category = "Generation")
 	TSubclassOf<AUtilityPolePreset> PresetClass;
 
-	UPROPERTY(EditInstanceOnly, Category = "Generation", meta = (AllowedClasses = "UtilityPolePreset"))
-	UObject* ActorToConectTo;
+	UPROPERTY(EditInstanceOnly, Category = "Generation")
+	AUtilityPole* ActorToConectTo;
 
 protected:
 

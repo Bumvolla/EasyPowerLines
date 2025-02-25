@@ -12,7 +12,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Placeable)
 class UTILITYPOLES_API AMultiplePointsCatenary : public ACatenaryBase
 {
 	GENERATED_BODY()

@@ -16,7 +16,7 @@
 #include "UtilityPolePreset.h"
 #include "CatenaryBase.generated.h"
 
-UCLASS(NotPlaceable)
+UCLASS(Abstract)
 class UTILITYPOLES_API ACatenaryBase : public AActor
 {
 	GENERATED_BODY()
