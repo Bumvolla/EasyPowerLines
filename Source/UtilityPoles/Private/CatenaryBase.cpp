@@ -301,7 +301,7 @@ void ACatenaryBase::CleanupSplines()
     {
         Spline->DestroyComponent();
     }
-    AllWires.Reset();
+    AllWires.SetNum(0);
 }
 
 

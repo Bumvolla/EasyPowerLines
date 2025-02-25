@@ -27,8 +27,11 @@ public:
 
 protected:
 
+	UPROPERTY()
 	TArray<USplineComponent*> AllWires;
+	UPROPERTY()
 	TArray<USplineMeshComponent*> AllSplineMeshes;
+	UPROPERTY()
 	TArray<USplineMeshComponent*> AvailableSplineMeshes;
 
 	virtual void OnConstruction(const FTransform& Transform) override;

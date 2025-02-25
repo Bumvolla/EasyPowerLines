@@ -73,7 +73,7 @@ void AUtilityPole::GenerateWires()
 
 	//Move current spline meshes to the reuse array
 	AvailableSplineMeshes = AllSplineMeshes;
-	AllSplineMeshes.Reset();
+	AllSplineMeshes.SetNum(0);
 
 	//Assign spline points
 	for (int32 i = 0; i < AllWires.Num(); i++)
