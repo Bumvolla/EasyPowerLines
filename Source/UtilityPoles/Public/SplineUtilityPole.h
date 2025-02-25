@@ -15,7 +15,7 @@
 
 #include "SplineUtilityPole.generated.h"
 
-UCLASS()
+UCLASS(Placeable)
 class UTILITYPOLES_API ASplineUtilityPole : public APoleBasedCatenary
 {
 	GENERATED_BODY()

@@ -1,4 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/*
+ * Copyright (c) 2025 Sora Mas
+ * All rights reserved.
+ */
 
 #pragma once
 
@@ -9,7 +12,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Placeable)
 class UTILITYPOLES_API APointToPointCatenary : public ACatenaryBase
 {
 	GENERATED_BODY()
