@@ -96,12 +96,12 @@ TArray<FVector> ACatenaryBase::CalculateSingleCatenary(TArray<FVector> Conection
 
     for (int32 i = 0; i < ConectionPoints.Num(); i++)
     {
-        const FVector currentPos = actorPos.InverseTransformPosition(ConectionPoints[i]);
+        const FVector currentPos = ConectionPoints[i];
         FVector nextPos;
 
         if(ConectionPoints.IsValidIndex(i+1))
         {
-            nextPos = actorPos.InverseTransformPosition(ConectionPoints[i+1]);
+            nextPos = ConectionPoints[i+1];
             if (!ConectionPoints.IsValidIndex(i + 2))
             {
                 bIsLast = true;
@@ -112,7 +112,7 @@ TArray<FVector> ACatenaryBase::CalculateSingleCatenary(TArray<FVector> Conection
             bIsLast = true;
             if (bIsClosedLoop)
             {
-                nextPos = actorPos.InverseTransformPosition(ConectionPoints[0]);
+                nextPos = ConectionPoints[0];
             }
             else break;
         }
