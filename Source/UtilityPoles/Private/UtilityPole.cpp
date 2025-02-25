@@ -56,7 +56,7 @@ void AUtilityPole::GenerateWires()
 	AUtilityPolePreset* CastedUtilityPole = Cast<AUtilityPolePreset>(PoleComponent->GetChildActor());
 	AUtilityPolePreset* OtherCastedPole = Cast<AUtilityPolePreset>(ActorToConectTo->PoleComponent->GetChildActor());
 
-	if ((CastedUtilityPole->StaticClass() != ActorToConectTo->StaticClass()) || !CastedUtilityPole || !ActorToConectTo)
+	if ((CastedUtilityPole->StaticClass() != OtherCastedPole->StaticClass()) || !CastedUtilityPole || !ActorToConectTo)
 		return;
 
 	const TArray<AUtilityPolePreset*> PolesToConect = {CastedUtilityPole, OtherCastedPole };
