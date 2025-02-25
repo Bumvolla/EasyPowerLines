@@ -6,14 +6,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CatenaryBase.h"
+#include "PoleBasedCatenary.h"
 #include "UtilityPole.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class UTILITYPOLES_API AUtilityPole : public ACatenaryBase
+class UTILITYPOLES_API AUtilityPole : public APoleBasedCatenary
 {
 	GENERATED_BODY()
 	
