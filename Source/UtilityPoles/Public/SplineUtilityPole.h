@@ -7,13 +7,13 @@
 
 #include "Components/ChildActorComponent.h"
 
-#include "CatenaryBase.h"
+#include "PoleBasedCatenary.h"
 #include "UtilityPolePreset.h"
 
 #include "SplineUtilityPole.generated.h"
 
 UCLASS()
-class UTILITYPOLES_API ASplineUtilityPole : public ACatenaryBase
+class UTILITYPOLES_API ASplineUtilityPole : public APoleBasedCatenary
 {
 	GENERATED_BODY()
 	
