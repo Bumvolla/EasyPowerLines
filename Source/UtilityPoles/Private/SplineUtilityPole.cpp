@@ -57,19 +57,16 @@ void ASplineUtilityPole::GenerateWires()
     TArray<TArray<FVector>> AllCatenaryPoints = CalculateCatenariesParalel(CastedKeys, Spline->IsClosedLoop());
     if (AllCatenaryPoints.IsEmpty()) return;
 
-    //Assign spline points
-    for (int32 i = 0; i < AllWires.Num(); i++)
-    {
-        AllWires[i]->SetSplinePoints(AllCatenaryPoints[i], ESplineCoordinateSpace::Local);
-    }
-
     //Move current spline meshes to the reuse array
     AvailableSplineMeshes = AllSplineMeshes;
     AllSplineMeshes.Reset();
 
-    // Constructs spline meshes along each spline
-    for (int32 i = 0; i < AllWires.Num();i++)
+    for (int32 i = 0; i < AllWires.Num(); i++)
     {
+        //Assign spline points
+        AllWires[i]->SetSplinePoints(AllCatenaryPoints[i], ESplineCoordinateSpace::Local);
+
+        // Constructs spline meshes along each spline
         ConstructSplineMeshesAlongSplines(AllWires[i]);
     }
 

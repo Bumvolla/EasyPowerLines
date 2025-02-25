@@ -71,19 +71,14 @@ void AUtilityPole::GenerateWires()
 
 	TArray<TArray<FVector>> AllCatenaryPoints = CalculateCatenariesParalel(PolesToConect);
 
-	//Assign spline points
-	for (int32 i = 0; i < AllWires.Num(); i++)
-	{
-		AllWires[i]->SetSplinePoints(AllCatenaryPoints[i], ESplineCoordinateSpace::Local);
-	}
-
 	//Move current spline meshes to the reuse array
 	AvailableSplineMeshes = AllSplineMeshes;
 	AllSplineMeshes.Reset();
 
-	// Constructs spline meshes along each spline
+	//Assign spline points
 	for (int32 i = 0; i < AllWires.Num(); i++)
 	{
+		AllWires[i]->SetSplinePoints(AllCatenaryPoints[i], ESplineCoordinateSpace::Local);
 		ConstructSplineMeshesAlongSplines(AllWires[i]);
 	}
 
