@@ -54,7 +54,7 @@ void AUtilityPole::GenerateWires()
 	SetMeshLenght();
 
 	AUtilityPolePreset* CastedUtilityPole = Cast<AUtilityPolePreset>(PoleComponent->GetChildActor());
-	AUtilityPolePreset* OtherCastedPole = Cast<AUtilityPolePreset>(ActorToConectTo);
+	AUtilityPolePreset* OtherCastedPole = Cast<AUtilityPolePreset>(ActorToConectTo->PoleComponent->GetChildActor());
 
 	if ((CastedUtilityPole->StaticClass() != ActorToConectTo->StaticClass()) || !CastedUtilityPole || !ActorToConectTo)
 		return;
