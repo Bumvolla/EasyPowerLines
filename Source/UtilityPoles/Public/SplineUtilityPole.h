@@ -1,4 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/*
+ * Copyright (c) 2025 Sora Mas
+ * All rights reserved.
+ */
 
 #pragma once
 
@@ -7,13 +10,13 @@
 
 #include "Components/ChildActorComponent.h"
 
-#include "CatenaryBase.h"
+#include "PoleBasedCatenary.h"
 #include "UtilityPolePreset.h"
 
 #include "SplineUtilityPole.generated.h"
 
 UCLASS()
-class UTILITYPOLES_API ASplineUtilityPole : public ACatenaryBase
+class UTILITYPOLES_API ASplineUtilityPole : public APoleBasedCatenary
 {
 	GENERATED_BODY()
 	

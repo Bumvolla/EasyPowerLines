@@ -1,4 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/*
+ * Copyright (c) 2025 Sora Mas
+ * All rights reserved.
+ */
 
 #pragma once
 
@@ -13,7 +16,7 @@
 #include "UtilityPolePreset.h"
 #include "CatenaryBase.generated.h"
 
-UCLASS()
+UCLASS(NotPlaceable)
 class UTILITYPOLES_API ACatenaryBase : public AActor
 {
 	GENERATED_BODY()
@@ -51,24 +54,6 @@ public:
 	UPROPERTY(EditInstanceOnly, Category = "Generation")
 	bool autoGenerate = false;
 
-	UPROPERTY(EditInstanceOnly, Category = "Generation")
-	float RandomTilt = 0;
-
-	UPROPERTY(EditInstanceOnly, Category = "Snaping")
-	bool bSnapToTerrain = false;
-
-	UPROPERTY(EditInstanceOnly, Category = "Snaping")
-	float RayLength = 200;
-
-	UPROPERTY(EditInstanceOnly, Category = "Snaping")
-	bool bAlignToNormal = false;
-
-	UPROPERTY(EditInstanceOnly, Category = "Snaping")
-	TEnumAsByte<ECollisionChannel> CollisionChannel = ECollisionChannel::ECC_Visibility;
-
-	UPROPERTY(EditInstanceOnly, Category = "Snaping")
-	bool bDrawDebugLines = false;
-
 	UPROPERTY(EditInstanceOnly, Category = "Debug")
 	bool bCleanupSplines = false;
 
@@ -91,14 +76,6 @@ protected:
 	TArray<TArray<FVector>> CalculateCatenariesParalel(const TArray<AUtilityPolePreset*>& ConectionPoints, bool bIsClosedLoop = false);
 
 	void ConstructSplineMeshesAlongSplines(USplineComponent* Spline);
-
-	void SnapToTerrain(const FTransform& OgTransform, FTransform& SnapedTransform, ECoordSystem CoordSystem = ECoordSystem::COORD_Local);
-
-	void AlignToNormal(const FVector& ImpactNormal, FQuat& NormalAlignedQuat);
-
-	void RandomizeTilt(const FTransform& OgTransform, FTransform& RandomRotatedTransform);
-
-	void DrawDebugLines(FVector StartPoint, FVector EndPoint, bool bHit, FHitResult Hit);
 
 	void CleanupSplines();
 
