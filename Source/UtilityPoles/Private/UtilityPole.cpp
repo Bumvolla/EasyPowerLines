@@ -18,6 +18,13 @@ AUtilityPole::AUtilityPole()
 
 void AUtilityPole::Generate()
 {
+	if (!ActorToConectTo)
+	{
+		RemoveSplines();
+		RemoveSplineMeshes();
+		return;
+	}
+
 	GeneratePole();
 	GenerateWires();
 
