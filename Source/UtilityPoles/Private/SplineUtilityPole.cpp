@@ -1,4 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/*
+ * Copyright (c) 2025 Sora Mas
+ * All rights reserved.
+ */
 
 #include "SplineUtilityPole.h"
 #include "UtilityPoles.h"
