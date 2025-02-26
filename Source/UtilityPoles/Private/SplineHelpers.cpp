@@ -180,8 +180,8 @@ float UCatenaryHelpers::FindParameterNewton(float TargetRatio)
 
 	for (int32 i = 0; i < MAX_ITERATIONS; ++i)
 	{
-		float Ratio = FMath::Sinh(Z) / Z;
-		float Derivative = (FMath::Cosh(Z) * Z - FMath::Sinh(Z)) / (Z * Z);
+		float Ratio = Sinh(Z) / Z;
+		float Derivative = (Cosh(Z) * Z - Sinh(Z)) / (Z * Z);
 
 		float Delta = (Ratio - TargetRatio) / Derivative;
 		Z -= Delta;
@@ -204,7 +204,7 @@ float UCatenaryHelpers::FindParameterFixed(float TargetRatio)
 		for (int32 j = 0; j < 5; ++j)
 		{
 			float TestZ = Z + StepSize;
-			float Ratio = FMath::Sinh(TestZ) / TestZ;
+			float Ratio = Sinh(TestZ) / TestZ;
 
 			if (isinf(Ratio))
 				break;
