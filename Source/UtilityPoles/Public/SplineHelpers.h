@@ -73,4 +73,10 @@ private:
 	static float FindParameterNewton(float TargetRatio);
 	static float FindParameterFixed(float TargetRatio);
 
+	static FORCEINLINE float Sinh(float Value) { return sinhf(Value); }
+	static FORCEINLINE double Sinh(double Value) { return sinh(Value); }
+
+	static FORCEINLINE float Cosh(float Value) { return coshf(Value); }
+	static FORCEINLINE double Cosh(double Value) { return cosh(Value); }
+
 };
