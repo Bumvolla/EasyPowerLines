@@ -110,7 +110,7 @@ TArray<FVector> UCatenaryHelpers::CreateCatenaryNewton(const FVector& StartPoint
 		(WireLength + HeightDiff) / (WireLength - HeightDiff)
 	)) / 2.0f;
 	float Q = (EndPoint.Z + StartPoint.Z -
-		WireLength * FMath::Cosh(Z) / FMath::Sinh(Z)) / 2.0f;
+		WireLength * Cosh(Z) / Sinh(Z)) / 2.0f;
 
 	Points.SetNum(Steps);
 
@@ -121,7 +121,7 @@ TArray<FVector> UCatenaryHelpers::CreateCatenaryNewton(const FVector& StartPoint
 		FVector Pos;
 		Pos.X = FMath::Lerp(StartPoint.X, EndPoint.X, T);
 		Pos.Y = FMath::Lerp(StartPoint.Y, EndPoint.Y, T);
-		Pos.Z = A * FMath::Cosh((T * HorizontalDistance - P) / A) + Q;
+		Pos.Z = A * Cosh((T * HorizontalDistance - P) / A) + Q;
 
 		Points[i] = Pos;
 	}
@@ -152,7 +152,7 @@ TArray<FVector> UCatenaryHelpers::CreateCatenaryFixed(const FVector& StartPoint,
 		(WireLength + HeightDiff) / (WireLength - HeightDiff)
 	)) / 2.0f;
 	float Q = (EndPoint.Z + StartPoint.Z -
-		WireLength * FMath::Cosh(Z) / FMath::Sinh(Z)) / 2.0f;
+		WireLength * Cosh(Z) / Sinh(Z)) / 2.0f;
 
 	TArray<FVector> Points;
 	Points.SetNum(Steps);
@@ -164,7 +164,7 @@ TArray<FVector> UCatenaryHelpers::CreateCatenaryFixed(const FVector& StartPoint,
 		FVector Pos;
 		Pos.X = FMath::Lerp(StartPoint.X, EndPoint.X, T);
 		Pos.Y = FMath::Lerp(StartPoint.Y, EndPoint.Y, T);
-		Pos.Z = A * FMath::Cosh((T * HorizontalDistance - P) / A) + Q;
+		Pos.Z = A * Cosh((T * HorizontalDistance - P) / A) + Q;
 
 		Points[i] = Pos;
 	}

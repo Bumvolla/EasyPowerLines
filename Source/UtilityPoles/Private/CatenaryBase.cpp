@@ -5,6 +5,7 @@
 
 #include "CatenaryBase.h"
 #include "UtilityPoles.h"
+#include "Misc/EngineVersionComparison.h"
 
 // Sets default values
 ACatenaryBase::ACatenaryBase()
@@ -160,8 +161,10 @@ TArray<TArray<FVector>> ACatenaryBase::CalculateCatenariesParalel(const TArray<A
     const int32 WiresNum = localSpaceWireTargets.Num();
     AllCatenaryPoints.SetNum(WiresNum);
 
+#if UE_VERSION_NEWER_THAN(5, 3, 0)
 
     ParallelFor(WiresNum, [&](int32 i) {
+
         for (int32 j = 0; j < ConectionPoints.Num(); j++)
         {
             bool bIsLast = false;
@@ -195,7 +198,7 @@ TArray<TArray<FVector>> ACatenaryBase::CalculateCatenariesParalel(const TArray<A
                 SlackVariation,
                 SplineResolution);
 
-            if (CatenaryPoints.IsEmpty()) return;
+            if (CatenaryPoints.IsEmpty()) continue;
 
             if (!bIsLast)
             {
@@ -211,6 +214,60 @@ TArray<TArray<FVector>> ACatenaryBase::CalculateCatenariesParalel(const TArray<A
 
     });
     return AllCatenaryPoints;
+#else
+
+    for (int i = 0; i < WiresNum; i++) {
+
+        for (int32 j = 0; j < ConectionPoints.Num(); j++)
+        {
+            bool bIsLast = false;
+
+            FTransform currentPos = ConectionPoints[j]->GetActorTransform();
+            FTransform nextPos;
+
+            if (ConectionPoints.IsValidIndex(j + 1))
+            {
+                nextPos = ConectionPoints[j + 1]->GetActorTransform();
+
+                if (!ConectionPoints.IsValidIndex(j + 2))
+                {
+                    bIsLast = true;
+                }
+            }
+            else
+            {
+                bIsLast = true;
+                if (bIsClosedLoop)
+                {
+                    nextPos = ConectionPoints[0]->GetActorTransform();
+                }
+                else break;
+            }
+
+            TArray<FVector> CatenaryPoints = UCatenaryHelpers::CreateCatenaryNewton(
+                currentPos.TransformPosition(localSpaceWireTargets[i]),
+                nextPos.TransformPosition(localSpaceWireTargets[i]),
+                Slack,
+                SlackVariation,
+                SplineResolution);
+
+            if (CatenaryPoints.IsEmpty()) continue;
+
+            if (!bIsLast)
+            {
+                CatenaryPoints.Pop();
+                AllCatenaryPoints[i].Append(CatenaryPoints);
+            }
+            else
+            {
+                AllCatenaryPoints[i].Append(CatenaryPoints);
+                break;
+            }
+        }
+
+    };
+    return AllCatenaryPoints;
+#endif
 }
 
 void ACatenaryBase::ConstructSplineMeshesAlongSplines(USplineComponent* Spline)
